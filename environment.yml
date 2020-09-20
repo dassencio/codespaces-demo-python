@@ -1,0 +1,6 @@
+name: base
+channels:
+  - defaults
+dependencies:
+  - tensorflow
+  - keras

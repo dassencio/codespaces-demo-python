@@ -1,123 +1,41 @@
-# Anaconda (Python 3)
+# Description
 
-## Summary
+This branch contains an example of a complex codespace with a large collection of libraries, modules
+and tools which together form an environment where a machine learning application can be developed
+with little to no initial setup effort needed.
 
-*Develop Anaconda applications in Python3. Installs dependencies from your environment.yml file and the Python extension.*
+This codespace was not created manually, but
+[fetched](https://github.com/microsoft/vscode-dev-containers/tree/master/containers/python-3-anaconda)
+from the [microsoft/vscode-dev-containers](https://github.com/microsoft/vscode-dev-containers)
+repository, which contains codespaces for various types of projects and programming lanaguages.
+Before setting up your own codespace configuration, it is always a good idea to look for a
+publicly-available one which already has at least part of your needs covered (open source FTW!).
+If you are lucky enough, you may even find a codespace which already has everything you want &mdash;
+off the shelf! :smile:
 
-| Metadata | Value |  
-|----------|-------|
-| *Contributors* | The [VS Code Python extension](https://marketplace.visualstudio.com/itemdetails?itemName=ms-python.python) team |
-| *Definition type* | Dockerfile |
-| *Published image* | mcr.microsoft.com/vscode/devcontainers/anaconda:3 |
-| *Published image architecture(s)* | x86-64 |
-| *Works in Codespaces* | Yes |
-| *Container host OS support* | Linux, macOS, Windows |
-| *Languages, platforms* | Python, Anaconda |
+There are two projects in this branch: the first one contains a test application (under
+[`test-project`](https://github.com/dassencio/codespaces-demo-python/tree/complex/test-project)) and
+the second one contains a Jupyter Notebook document with machine learning models for analyzing the
+[Titanic dataset](https://www.openml.org/d/40945) (under
+[`titanic`](https://github.com/dassencio/codespaces-demo-python/tree/complex/titanic)).
 
-## Using this definition with an existing folder
+# Usage instructions
 
-### Configuration
+Create a codespace for this branch by clicking `Code` > `Open with Codespaces` > `New codespace`.
+When it is ready, open and run
+[`test-project/hello.py`](https://github.com/dassencio/codespaces-demo-python/blob/complex/test-project/hello.py).
+This will show you if the codespace has been properly set up and also activate the `conda` environment which is
+necessary for the next stage of the demo.
 
-While the definition itself works unmodified, you can also directly reference pre-built versions of `.devcontainer/base.Dockerfile` by using the `image` property in `.devcontainer/devcontainer.json` or updating the `FROM` statement in your own `Dockerfile` to the following. An example `Dockerfile` is included in this repository.
+The second (and more interesting) part of the demo is on
+[`titanic/titanic.ipynb`](https://github.com/dassencio/codespaces-demo-python/blob/complex/titanic/titanic.ipynb).
+This is a Jupyer Notebook document containing two machine learning models used to analyze the
+Titanic dataset. It illustrates how well Jupyter Notebook integrates with the web-based version of
+Visual Studio Code and how the codespace enables the data analysis to be carried out without _any_
+setup effort needed from the user.
 
-- `mcr.microsoft.com/vscode/devcontainers/anaconda` (or `anaconda:3`)
-
-Version specific tags tied to [releases in this repository](https://github.com/microsoft/vscode-dev-containers/releases) are also available.
-
-- `mcr.microsoft.com/vscode/devcontainers/anaconda:0`
-- `mcr.microsoft.com/vscode/devcontainers/anaconda:0.141`
-- `mcr.microsoft.com/vscode/devcontainers/anaconda:0.141.0`
-
-Alternatively, you can use the contents of `base.Dockerfile` to fully customize your container's contents or to build it for a container host architecture not supported by the image.
-
-#### Debug Configuration
-
-Note that only the integrated terminal is supported by the Remote - Containers extension. You may need to modify `launch.json` configurations to include the following value if an external console is used.
-
-```json
-"console": "integratedTerminal"
-```
-
-#### Using the forwardPorts property
-
-By default, frameworks like Flask only listens to localhost inside the container. As a result, we recommend using the `forwardPorts` property (available in v0.98.0+) to make these ports available locally.
-
-```json
-"forwardPorts": [5000]
-```
-
-The `appPort` property [publishes](https://docs.docker.com/config/containers/container-networking/#published-ports) rather than forwards the port, so applications need to listen to `*` or `0.0.0.0` for the application to be accessible externally. This conflicts with the defaults of some Python frameworks, but fortunately the `forwardPorts` property does not have this limitation.
-
-If you've already opened your folder in a container, rebuild the container using the **Remote-Containers: Rebuild Container** command from the Command Palette (<kbd>F1</kbd>) so the settings take effect.
-
-### Installing Node.js
-
-Given how frequently Node.js is used for CLIs and front-end code, this container also includes the option to install Node.js. You can change the version of Node.js installed or disable its installation by updating the `args` property in `.devcontainer/devcontainer.json`.
-
-```json
-"args": {
-    "INSTALL_NODE": "true",
-    "NODE_VERSION": "10"
-}
-```
-
-#### Installing a different version of Python
-
-As covered in the [user FAQ](https://docs.anaconda.com/anaconda/user-guide/faq) for Anaconda, you can install different versions of Python than the one in this image by running the following from a terminal:
-
-```bash
-conda install python=3.6
-```
-
-Or in a Dockerfile:
-
-```Dockerfile
-RUN conda install -y python=3.6
-```
-
-### [Optional] Adding the contents of environment.yml to the image
-
-For convenience, this definition will automatically install dependencies from the `environment.yml` file in the parent folder when the container is built. You can change this behavior by altering this line in the `.devcontainer/Dockerfile`:
-
-```Dockerfile
-RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi \
-    && rm -rf /tmp/conda-tmp
-```
-
-### Adding the definition to your folder
-
-1. If this is your first time using a development container, please follow the [getting started steps](https://aka.ms/vscode-remote/containers/getting-started) to set up your machine.
-
-2. To use VS Code's copy of this definition:
-   1. Start VS Code and open your project folder.
-   2. Press <kbd>F1</kbd> select and **Remote-Containers: Add Development Container Configuration Files...** from the command palette.
-   3. Select the Python 3 - Anaconda definition.
-
-3. To use latest-and-greatest copy of this definition from the repository:
-   1. Clone this repository.
-   2. Copy the contents of `containers/python-3-anaconda/.devcontainer` to the root of your project folder.
-   3. Start VS Code and open your project folder.
-
-4. After following step 2 or 3, the contents of the `.devcontainer` folder in your project can be adapted to meet your needs.
-
-5. Finally, press <kbd>F1</kbd> and run **Remote-Containers: Reopen Folder in Container** to start using the definition.
-
-## Testing the definition
-
-This definition includes some test code that will help you verify it is working as expected on your system. Follow these steps:
-
-1. If this is your first time using a development container, please follow the [getting started steps](https://aka.ms/vscode-remote/containers/getting-started) to set up your machine.
-2. Clone this repository.
-3. Start VS Code, press <kbd>F1</kbd>, and select **Remote-Containers: Open Folder in Container...**
-4. Select the `containers/python-3-anaconda` folder.
-5. After the folder has opened in the container, press <kbd>F5</kbd> to start the project.
-6. A `test-project/plot.png` file should be added to the folder after it runs with the plot result.
-7. Next, open `test-project/hello.py` and press <kbd>ctrl/cmd</kbd>+<kbd>a</kbd> then <kbd>shift</kbd>+<kbd>enter</kbd>.
-8. You should see the `matplotlib` output in the interactive window.
-9. From here, you can add breakpoints or edit the contents of the `test-project` folder to do further testing.
-
-## License
-
-Copyright (c) Microsoft Corporation. All rights reserved.
-
-Licensed under the MIT License. See [LICENSE](https://github.com/Microsoft/vscode-dev-containers/blob/master/LICENSE)
+**NOTE**: The analysis in
+[`titanic/titanic.ipynb`](https://github.com/dassencio/codespaces-demo-python/blob/complex/titanic/titanic.ipynb)
+closely follows [this tutorial](https://code.visualstudio.com/docs/python/data-science-tutorial).
+Each step is thoroughly explained there, so follow the link if you wish to understand things in more
+detail.
