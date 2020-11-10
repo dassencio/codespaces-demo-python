@@ -1,13 +1,6 @@
 {
 	"name": "Anaconda (Python 3)",
-	"build": { 
-		"context": "..",
-		"dockerfile": "base.Dockerfile",
-		"args": {
-			"INSTALL_NODE": "true",
-			"NODE_VERSION": "lts/*"
-		}
-	},
+	"image": "ghcr.io/octodemo-db/github-pyml-development-container:latest",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
